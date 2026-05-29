@@ -42,6 +42,19 @@ Open any post in the editor. In the **Audio Version** sidebar panel, click **Gen
 
 To regenerate audio after editing a post, click **Generate Audio** again — the old file is replaced.
 
+## Approximate cost per post
+
+OpenAI TTS is priced per character of input text. The plugin strips HTML, code blocks, and images before sending, so effective character count is lower than raw post length.
+
+| Post length | tts-1 (standard) | tts-1-hd (default) |
+|---|---|---|
+| 500 words (~3K chars) | ~$0.05 | ~$0.09 |
+| 1,000 words (~6K chars) | ~$0.09 | ~$0.18 |
+| 1,500 words (~9K chars) | ~$0.14 | ~$0.27 |
+| 2,000 words (~12K chars) | ~$0.18 | ~$0.36 |
+
+Rates: `tts-1` $0.015 / 1K chars · `tts-1-hd` $0.030 / 1K chars ([OpenAI pricing](https://openai.com/api/pricing/)).
+
 ## How it works
 
 ```
