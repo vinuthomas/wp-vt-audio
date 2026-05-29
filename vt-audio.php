@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VT Audio
  * Description: Generate AI audio versions of posts via OpenAI TTS and embed a native player.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Vinu Thomas
  * License: GPL-2.0+
  */
@@ -18,7 +18,15 @@ add_action( 'admin_init', function () {
 	register_setting( 'vt_audio', 'vt_audio_model',     [ 'sanitize_callback' => 'sanitize_text_field', 'default' => 'tts-1-hd' ] );
 	register_setting( 'vt_audio', 'vt_audio_voice',     [ 'sanitize_callback' => 'sanitize_text_field', 'default' => 'nova' ] );
 	register_setting( 'vt_audio', 'vt_audio_min_words', [ 'sanitize_callback' => 'absint',              'default' => 300 ] );
+	register_setting( 'vt_audio', 'vt_audio_skip_tags', [ 'sanitize_callback' => 'vt_audio_sanitize_tag_list', 'default' => 'pre,code,figure,img,blockquote,table' ] );
 } );
+
+function vt_audio_sanitize_tag_list( string $value ): string {
+	$tags = array_filter( array_map( function ( $t ) {
+		return preg_replace( '/[^a-z0-9]/i', '', strtolower( trim( $t ) ) );
+	}, explode( ',', $value ) ) );
+	return implode( ',', array_unique( $tags ) );
+}
 
 add_action( 'admin_menu', function () {
 	add_options_page( 'VT Audio', 'VT Audio', 'manage_options', 'vt-audio', 'vt_audio_settings_page' );
@@ -70,6 +78,15 @@ function vt_audio_settings_page(): void {
 							value="<?php echo esc_attr( get_option( 'vt_audio_min_words', 300 ) ); ?>"
 							min="0" class="small-text">
 						<p class="description">Player won't show on posts shorter than this. Set 0 to always show.</p>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="vt_audio_skip_tags">Tags to skip</label></th>
+					<td>
+						<input type="text" id="vt_audio_skip_tags" name="vt_audio_skip_tags"
+							value="<?php echo esc_attr( get_option( 'vt_audio_skip_tags', 'pre,code,figure,img,blockquote,table' ) ); ?>"
+							class="regular-text" placeholder="pre,code,figure,img,blockquote,table">
+						<p class="description">Comma-separated HTML tags whose content will be silently removed before generating audio. Block elements (e.g. <code>pre</code>, <code>blockquote</code>) are stripped including their inner content. Void elements (e.g. <code>img</code>) are stripped as standalone tags.</p>
 					</td>
 				</tr>
 			</table>
@@ -365,12 +382,14 @@ function vt_audio_clean_content( WP_Post $post ): string {
 	// Strip Gutenberg block comments
 	$content = preg_replace( '/<!--.*?-->/s', '', $content );
 
-	// Remove code blocks silently — pre/code content is never read aloud
-	$content = preg_replace( '/<(pre|code)[^>]*>.*?<\/\1>/si', ' ', $content );
-
-	// Remove figures and images
-	$content = preg_replace( '/<figure[^>]*>.*?<\/figure>/si', '', $content );
-	$content = preg_replace( '/<img[^>]*>/i', '', $content );
+	// Remove skip tags (block elements strip content; void elements strip the tag itself)
+	$skip_raw  = get_option( 'vt_audio_skip_tags', 'pre,code,figure,img,blockquote,table' );
+	$skip_tags = array_filter( array_map( 'trim', explode( ',', $skip_raw ) ) );
+	if ( $skip_tags ) {
+		$tag_pattern = implode( '|', array_map( 'preg_quote', $skip_tags ) );
+		$content = preg_replace( '/<(' . $tag_pattern . ')[^>]*>.*?<\/\1>/si', ' ', $content );
+		$content = preg_replace( '/<(?:' . $tag_pattern . ')[^>]*\/?>/i', '', $content );
+	}
 
 	// Remove shortcodes
 	$content = strip_shortcodes( $content );
@@ -464,7 +483,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( ! is_singular( 'post' ) ) return;
 	if ( ! get_post_meta( get_the_ID(), VT_AUDIO_META_KEY, true ) ) return;
 
-	wp_register_style( 'vt-audio', false, [], '1.1.0' );
+	wp_register_style( 'vt-audio', false, [], '1.2.0' );
 	wp_enqueue_style( 'vt-audio' );
 	wp_add_inline_style( 'vt-audio', '
 		.vt-audio-player {
@@ -561,7 +580,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		}
 	' );
 
-	wp_register_script( 'vt-audio', false, [], '1.1.0', true );
+	wp_register_script( 'vt-audio', false, [], '1.2.0', true );
 	wp_enqueue_script( 'vt-audio' );
 	wp_add_inline_script( 'vt-audio', '
 		document.querySelectorAll(".vt-audio-player").forEach(function(player) {
