@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Packages
+*.zip
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local dev
+node_modules/

@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1544 500" width="1544" height="500">
+  <defs>
+    <!-- Dark background base -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d0f14"/>
+      <stop offset="100%" stop-color="#111520"/>
+    </linearGradient>
+
+    <!-- Accent glow behind waveform -->
+    <radialGradient id="glow" cx="72%" cy="50%" r="38%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Left text-side subtle glow -->
+    <radialGradient id="glow2" cx="22%" cy="50%" r="30%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Waveform bar gradient -->
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="60%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#f9731620"/>
+    </linearGradient>
+
+    <!-- Dimmer bars -->
+    <linearGradient id="bar-dim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f9731650"/>
+      <stop offset="100%" stop-color="#f9731610"/>
+    </linearGradient>
+
+    <!-- Clip to canvas -->
+    <clipPath id="canvas">
+      <rect width="1544" height="500"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#canvas)">
+    <!-- Background -->
+    <rect width="1544" height="500" fill="url(#bg)"/>
+    <rect width="1544" height="500" fill="url(#glow)"/>
+    <rect width="1544" height="500" fill="url(#glow2)"/>
+
+    <!-- Subtle grid lines (horizontal) -->
+    <line x1="0" y1="125" x2="1544" y2="125" stroke="#ffffff06" stroke-width="1"/>
+    <line x1="0" y1="250" x2="1544" y2="250" stroke="#ffffff08" stroke-width="1"/>
+    <line x1="0" y1="375" x2="1544" y2="375" stroke="#ffffff06" stroke-width="1"/>
+
+    <!-- Vertical divider -->
+    <line x1="720" y1="60" x2="720" y2="440" stroke="#ffffff08" stroke-width="1"/>
+
+    <!-- === WAVEFORM (right side, centred at x=1100, y=250) === -->
+    <!-- Heights represent a realistic-looking audio waveform -->
+    <!-- Each bar: x position, width=10, gap=6, centred vertically -->
+    <!-- Format: rect x y width height, centred at y=250 -->
+
+    <!-- Bar data: (cx, half-height) pairs, cx starts at 780 -->
+    <!-- Row 1: quiet intro -->
+    <rect x="780" y="235" width="10" height="30" rx="5" fill="url(#bar-dim)"/>
+    <rect x="796" y="228" width="10" height="44" rx="5" fill="url(#bar-dim)"/>
+    <rect x="812" y="238" width="10" height="24" rx="5" fill="url(#bar-dim)"/>
+    <rect x="828" y="224" width="10" height="52" rx="5" fill="url(#bar-dim)"/>
+    <rect x="844" y="232" width="10" height="36" rx="5" fill="url(#bar-dim)"/>
+
+    <!-- Rising -->
+    <rect x="860" y="218" width="10" height="64" rx="5" fill="url(#bar)"/>
+    <rect x="876" y="208" width="10" height="84" rx="5" fill="url(#bar)"/>
+    <rect x="892" y="196" width="10" height="108" rx="5" fill="url(#bar)"/>
+    <rect x="908" y="180" width="10" height="140" rx="5" fill="url(#bar)"/>
+    <rect x="924" y="164" width="10" height="172" rx="5" fill="url(#bar)"/>
+
+    <!-- Peak -->
+    <rect x="940" y="148" width="10" height="204" rx="5" fill="url(#bar)"/>
+    <rect x="956" y="134" width="10" height="232" rx="5" fill="url(#bar)"/>
+    <rect x="972" y="122" width="10" height="256" rx="5" fill="url(#bar)"/>
+    <rect x="988" y="110" width="10" height="280" rx="5" fill="url(#bar)"/>
+    <rect x="1004" y="100" width="10" height="300" rx="5" fill="url(#bar)"/>
+
+    <!-- Highest bars cluster -->
+    <rect x="1020" y="92" width="10" height="316" rx="5" fill="url(#bar)"/>
+    <rect x="1036" y="84" width="10" height="332" rx="5" fill="url(#bar)"/>
+    <rect x="1052" y="78" width="10" height="344" rx="5" fill="url(#bar)"/>
+    <rect x="1068" y="86" width="10" height="328" rx="5" fill="url(#bar)"/>
+    <rect x="1084" y="96" width="10" height="308" rx="5" fill="url(#bar)"/>
+
+    <!-- Descent -->
+    <rect x="1100" y="108" width="10" height="284" rx="5" fill="url(#bar)"/>
+    <rect x="1116" y="122" width="10" height="256" rx="5" fill="url(#bar)"/>
+    <rect x="1132" y="140" width="10" height="220" rx="5" fill="url(#bar)"/>
+    <rect x="1148" y="156" width="10" height="188" rx="5" fill="url(#bar)"/>
+    <rect x="1164" y="170" width="10" height="160" rx="5" fill="url(#bar)"/>
+
+    <!-- Quieter again -->
+    <rect x="1180" y="186" width="10" height="128" rx="5" fill="url(#bar)"/>
+    <rect x="1196" y="200" width="10" height="100" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1212" y="212" width="10" height="76" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1228" y="222" width="10" height="56" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1244" y="230" width="10" height="40" rx="5" fill="url(#bar-dim)"/>
+
+    <!-- Tail -->
+    <rect x="1260" y="236" width="10" height="28" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1276" y="240" width="10" height="20" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1292" y="242" width="10" height="16" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1308" y="244" width="10" height="12" rx="5" fill="url(#bar-dim)"/>
+    <rect x="1324" y="245" width="10" height="10" rx="5" fill="url(#bar-dim)"/>
+
+    <!-- Small playhead dot on waveform -->
+    <circle cx="1052" cy="250" r="7" fill="#f97316"/>
+    <circle cx="1052" cy="250" r="14" fill="#f97316" fill-opacity="0.2"/>
+
+    <!-- === LEFT: Branding === -->
+
+    <!-- Small eyebrow label -->
+    <text x="120" y="186" font-family="'Courier New', monospace" font-size="13" letter-spacing="5" fill="#f97316" opacity="0.9">WORDPRESS PLUGIN</text>
+
+    <!-- Plugin name — large, geometric -->
+    <text x="116" y="282" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="700" fill="#ffffff" letter-spacing="-2">VT Audio</text>
+
+    <!-- Tagline -->
+    <text x="120" y="326" font-family="'Courier New', monospace" font-size="17" fill="#94a3b8" letter-spacing="1">AI-powered audio for your blog</text>
+
+    <!-- Accent underline under name -->
+    <rect x="120" y="296" width="280" height="3" rx="2" fill="#f97316" opacity="0.8"/>
+
+    <!-- Small OpenAI TTS badge -->
+    <rect x="120" y="358" width="148" height="34" rx="17" fill="#ffffff08" stroke="#ffffff18" stroke-width="1"/>
+    <text x="194" y="380" font-family="'Courier New', monospace" font-size="12" fill="#94a3b8" text-anchor="middle" letter-spacing="1">OpenAI TTS</text>
+
+    <rect x="280" y="358" width="116" height="34" rx="17" fill="#ffffff08" stroke="#ffffff18" stroke-width="1"/>
+    <text x="338" y="380" font-family="'Courier New', monospace" font-size="12" fill="#94a3b8" text-anchor="middle" letter-spacing="1">Gutenberg</text>
+
+  </g>
+</svg>
