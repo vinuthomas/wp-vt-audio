@@ -79,8 +79,10 @@ Bump `Version:` in the plugin header and the `wp_register_style`/`wp_register_sc
 When the user gives the go-ahead:
 
 1. Bump the `Version:` in the plugin header (`* Version: X.Y.Z`) and update the matching version strings in `wp_register_style()` and `wp_register_script()` calls.
-2. Create a zip at the project root:
+2. Update `Tested up to:` in the plugin header if the WordPress version has changed. Current value: `7.0`. `Requires at least:` stays at `6.0` unless explicitly changed.
+3. Create a zip at the project root:
    ```bash
    zip -r vt-audio.zip vt-audio.php --exclude "*.DS_Store"
    ```
-3. Tell the user the zip path and new version number so they can upload it via **Plugins → Add New → Upload Plugin** in wp-admin.
+4. Copy the zip to the Desktop: `cp vt-audio.zip ~/Desktop/vt-audio.zip`
+5. Tell the user the zip path and new version number so they can upload it via **Plugins → Add New → Upload Plugin** in wp-admin.
